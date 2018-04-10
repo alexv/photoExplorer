@@ -1,13 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Image,
-  StyleSheet,
-  TextInput,
-  TouchableHighlight,
-  SafeAreaView,
-  ScrollView,
-} from 'react-native';
+import { StyleSheet, TextInput, TouchableHighlight, SafeAreaView, ScrollView } from 'react-native';
+
+import LoadableImage from '../components/LoadableImage';
 
 const styles = StyleSheet.create({
   container: {
@@ -46,19 +41,32 @@ export default class Home extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { text: '', searchResult: { hits: [] } };
+    this.state = { text: '', searchResult: { hits: [] }, searchPage: 0 };
   }
+
+  getMorePictures = () => {
+    const webSafeString = this.state.text.replace(/\s/g, '+');
+    fetch(`https://pixabay.com/api?key=8642121-3579382886baa758cf8891d9d&image_type=photo&q=${webSafeString}&page=${
+      this.state.searchPage
+    }`)
+      .then(response => response.json())
+      .then(data =>
+        this.setState({
+          searchResult: { hits: [...this.state.searchResult.hits, ...data.hits] },
+          searchPage: this.state.searchPage + 1,
+        }))
+      .catch(console.error);
+  };
 
   handleSubmit = () => {
     const webSafeString = this.state.text.replace(/\s/g, '+');
     fetch(`https://pixabay.com/api?key=8642121-3579382886baa758cf8891d9d&image_type=photo&q=${webSafeString}`)
       .then(response => response.json())
-      .then(data => this.setState({ searchResult: data }))
+      .then(data => this.setState({ searchResult: data, searchPage: 1 }))
       .catch(console.error);
   };
 
   render() {
-    console.log(this.state.searchResult);
     return (
       <SafeAreaView style={styles.container}>
         <TextInput
@@ -69,14 +77,32 @@ export default class Home extends React.Component {
           onSubmitEditing={this.handleSubmit}
           clearButtonMode="while-editing"
         />
-        <ScrollView contentContainerStyle={styles.scrollView}>
+        <ScrollView
+          showVerticalScrollIndicator={false}
+          contentContainerStyle={styles.scrollView}
+          scrollEventThrottle={3000}
+          onScroll={(e) => {
+            let paddingToBottom = 10;
+            paddingToBottom += e.nativeEvent.layoutMeasurement.height;
+            if (
+              e.nativeEvent.contentOffset.y >=
+              e.nativeEvent.contentSize.height - paddingToBottom
+            ) {
+              console.log('near end');
+              this.getMorePictures();
+            }
+          }}
+        >
           {this.state.searchResult.hits.map(hit => (
             <TouchableHighlight
               key={hit.id}
               style={{ width: 300, height: 200 }}
               onPress={() => this.props.navigation.navigate('Detail', { hit })}
             >
-              <Image style={{ width: 300, height: 200 }} source={{ uri: hit.webformatURL }} />
+              <LoadableImage
+                style={{ width: 300, height: 200 }}
+                source={{ uri: hit.webformatURL }}
+              />
             </TouchableHighlight>
           ))}
         </ScrollView>
