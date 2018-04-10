@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Image,
   StyleSheet,
@@ -36,6 +37,9 @@ const styles = StyleSheet.create({
 });
 
 export default class Home extends React.Component {
+  static propTypes = {
+    navigation: PropTypes.shape({ navigate: PropTypes.func }).isRequired,
+  };
   static navigationOptions = {
     title: '📷 Fresh Pix 📷',
   };

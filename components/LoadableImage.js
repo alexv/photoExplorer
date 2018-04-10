@@ -1,8 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { View, Text, Image } from 'react-native';
 
 export default class LoadableImage extends React.Component {
+  static propTypes = {
+    style: PropTypes.shape({ width: PropTypes.number, height: PropTypes.number }),
+    source: PropTypes.shape({ uri: PropTypes.string }),
+  };
+  static defaultProps = {
+    style: { height: 100, width: 100 },
+    source: { uri: '' },
+  };
+
   constructor(props) {
     super(props);
     this.state = {
