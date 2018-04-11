@@ -18,7 +18,7 @@ export default class Detail extends React.Component {
     navigation: PropTypes.shape({
       state: PropTypes.shape({
         params: PropTypes.shape({
-          hit: PropTypes.shape({
+          item: PropTypes.shape({
             id: PropTypes.number,
             user: PropTypes.string,
             tags: PropTypes.string,
@@ -32,7 +32,7 @@ export default class Detail extends React.Component {
     navigation: {
       state: {
         params: {
-          hit: {
+          item: {
             id: 0,
             user: 'no user listed',
             webformatURL: '',
@@ -46,13 +46,13 @@ export default class Detail extends React.Component {
   };
 
   render() {
-    const { hit } = this.props.navigation.state.params;
+    const { item } = this.props.navigation.state.params;
     return (
       <SafeAreaView style={styles.container}>
-        <Text>By: {hit.user}</Text>
-        <LoadableImage style={{ width: 600, height: 400 }} source={{ uri: hit.webformatURL }} />
+        <Text>By: {item.user}</Text>
+        <LoadableImage style={{ width: 600, height: 400 }} source={{ uri: item.webformatURL }} />
         <Text>Tags</Text>
-        {hit.tags
+        {item.tags
           .replace(/,/g, '')
           .split(' ')
           .map(tag => <Text>{tag}</Text>)}
@@ -60,25 +60,3 @@ export default class Detail extends React.Component {
     );
   }
 }
-//  "comments": 0,
-// 12:49:54:       "downloads": 103,
-// 12:49:54:       "favorites": 4,
-// 12:49:54:       "id": 3303721,
-// 12:49:54:       "imageHeight": 1080,
-// 12:49:54:       "imageSize": 525599,
-// 12:49:54:       "imageWidth": 1920,
-// 12:49:54:       "largeImageURL": "https://pixabay.com/get/ea36b10c2ff6003ed1584d05fb1d4e90e775e3d718ac104497f3c27eafe4bcbb_1280.jpg",
-// 12:49:54:       "likes": 4,
-// 12:49:54:       "pageURL": "https://pixabay.com/en/nature-mammal-animal-wildlife-wolf-3303721/",
-// 12:49:54:       "previewHeight": 84,
-// 12:49:54:       "previewURL": "https://cdn.pixabay.com/photo/2018/04/09/10/15/nature-3303721_150.jpg",
-// 12:49:54:       "previewWidth": 150,
-// 12:49:54:       "tags": "nature, mammal, animal",
-// 12:49:54:       "type": "photo",
-// 12:49:54:       "user": "Ihaksi",
-// 12:49:54:       "userImageURL": "https://cdn.pixabay.com/user/2018/02/09/09-57-02-435_250x250.jpg",
-// 12:49:54:       "user_id": 1727450,
-// 12:49:54:       "views": 184,
-// 12:49:54:       "webformatHeight": 360,
-// 12:49:54:       "webformatURL": "https://pixabay.com/get/ea36b10c2ff6003ed1584d05fb1d4e90e775e3d718ac104497f3c27eafe4bcbb_640.jpg",
-// 12:49:54:       "webformatWidth": 640,
