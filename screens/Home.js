@@ -47,7 +47,6 @@ class Home extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <SafeAreaView style={styles.container}>
         <TextInput
