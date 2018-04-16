@@ -8,7 +8,12 @@ import Detail from './screens/Detail';
 
 const RootStack = StackNavigator({
   Home: { screen: Home },
-  Detail: { screen: Detail },
+  Detail: {
+    screen: Detail,
+    navigationOptions: ({ navigation }) => ({
+      title: `By: ${navigation.state.params.title}`,
+    }),
+  },
 });
 
 const App = () => (

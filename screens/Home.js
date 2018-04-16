@@ -74,7 +74,9 @@ class Home extends React.Component {
                 <TouchableHighlight
                   key={item.id}
                   style={{ width: 180, height: 180 }}
-                  onPress={() => this.props.navigation.navigate('Detail', { item })}
+                  onPress={() =>
+                    this.props.navigation.navigate('Detail', { item, title: item.user })
+                  }
                 >
                   <LoadableImage
                     style={{ width: 180, height: 180 }}

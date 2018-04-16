@@ -17,13 +17,19 @@ const Detail = ({ navigation }) => {
   const tagsArray = item.tags.split(', ');
   return (
     <SafeAreaView style={styles.container}>
-      <Text>By: {item.user}</Text>
       <LoadableImage style={{ width: 600, height: 400 }} source={{ uri: item.webformatURL }} />
+      <Text>Resolution</Text>
+      <Text>
+        {item.imageWidth} x {item.imageHeight}
+      </Text>
       <Text>Tags</Text>
       <View
         style={{
- width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'center',
-}}
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}
       >
         {tagsArray.map(tag => (
           <View
